@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
         bool horizontalInput = !Mathf.Approximately(horizontal, 0f);
         bool verticalInput = !Mathf.Approximately(vertical, 0f);
 
-        bool itsWalking = hasHorizontalInput || hasVerticalInput;
+        bool itsWalking = horizontalInput || verticalInput;
 
     }
 }
