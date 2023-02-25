@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     public float turnSpeed;
     Quaternion m_Rotation = Quaternion.identity;
     Rigidbody m_Rigidbody;
+    private AudioSource m_AudioSource;
     void Start()
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();
     }
 
     
@@ -29,6 +31,19 @@ public class PlayerMovement : MonoBehaviour
 
         bool itsWalking = horizontalInput || verticalInput;
         m_Animator.SetBool("itsWalking", itsWalking);
+        if(itsWalking)
+        {
+            if(!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();
+            }   
+           
+        } 
+        else
+        {
+            m_AudioSource.Stop();
+        }
+     
 
 
         Vector3 desireForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
