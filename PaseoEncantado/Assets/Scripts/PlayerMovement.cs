@@ -22,19 +22,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMovement(InputAction.CallbackContext value)
     {
-        Vector2 inputMovement = value.ReadValue<Vector2>();
+        inputMovement = value.ReadValue<Vector2>();
         m_Movement.Set(inputMovement.x, 0f, inputMovement.y);
         m_Movement.Normalize();
     }
     void FixedUpdate()
     {
-        float hortizontal = inputMovement.x;
+        float horizontal = inputMovement.x;
         float vertical = inputMovement.y;
         /*float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
+        float vertical = Input.GetAxis("Vertical");*/
+        Debug.Log (vertical);
         bool horizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool verticalInput = !Mathf.Approximately(vertical, 0f);*/
+        bool verticalInput = !Mathf.Approximately(vertical, 0f);
 
         bool itsWalking = horizontalInput || verticalInput;
         m_Animator.SetBool("itsWalking", itsWalking);
