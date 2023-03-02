@@ -28,11 +28,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
+        float hortizontal = inputMovement.x;
+        float vertical = inputMovement.y;
+        /*float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
         bool horizontalInput = !Mathf.Approximately(horizontal, 0f);
-        bool verticalInput = !Mathf.Approximately(vertical, 0f);
+        bool verticalInput = !Mathf.Approximately(vertical, 0f);*/
 
         bool itsWalking = horizontalInput || verticalInput;
         m_Animator.SetBool("itsWalking", itsWalking);
