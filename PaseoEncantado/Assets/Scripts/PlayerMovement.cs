@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     Vector3 m_Movement;
+    Vector2 inputMovement;
     Animator m_Animator;
     public float turnSpeed;
     Quaternion m_Rotation = Quaternion.identity;
@@ -12,19 +14,22 @@ public class PlayerMovement : MonoBehaviour
     private AudioSource m_AudioSource;
     void Start()
     {
+        
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
         m_AudioSource = GetComponent<AudioSource>();
     }
 
-    
+    public void OnMovement(InputAction.CallbackContext value)
+    {
+        Vector2 inputMovement = value.ReadValue<Vector2>();
+        m_Movement.Set(inputMovement.x, 0f, inputMovement.y);
+        m_Movement.Normalize();
+    }
     void FixedUpdate()
     {
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
-
-        m_Movement.Set(horizontal, 0, vertical);
-        m_Movement.Normalize();
 
         bool horizontalInput = !Mathf.Approximately(horizontal, 0f);
         bool verticalInput = !Mathf.Approximately(vertical, 0f);
@@ -56,4 +61,5 @@ public class PlayerMovement : MonoBehaviour
         m_Rigidbody.MovePosition(m_Rigidbody.position + m_Movement * m_Animator.deltaPosition.magnitude);
         m_Rigidbody.MoveRotation(m_Rotation);
     }
+   
 }
