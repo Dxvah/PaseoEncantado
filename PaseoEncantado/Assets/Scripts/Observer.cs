@@ -7,8 +7,15 @@ public class Observer : MonoBehaviour
     public Transform player;
     bool m_IsplayerInRange;
     public GameEnding gameEnding;
+    public AudioSource p_IsOnView;
+    float c_Timer;
+    public CanvasGroup exclamationImageBackgroundCanvaGroup;
+    public float timeToReact = 2f;
+    bool p_IsOnRange = false;
+    bool c_AudioPlayed = false;
     void Start()
     {
+        p_IsOnView = GetComponent<AudioSource>();
         
     }
 
@@ -25,7 +32,7 @@ public class Observer : MonoBehaviour
             {
                 if (raycastHit.collider.transform == player)
                 {
-                    gameEnding.CaughtPlayer();
+                    PlayerCaught(exclamationImageBackgroundCanvaGroup, true, p_IsOnView);                                        
                 }
             }
         }
@@ -45,5 +52,22 @@ public class Observer : MonoBehaviour
         {
             m_IsplayerInRange = false;
         }
+    }
+    void PlayerCaught (CanvasGroup imageCanvasGroup, bool p_IsOnRange, AudioSource p_IsOnView)
+    {
+        Debug.Log ("en vision");
+        if(!c_AudioPlayed)
+        {
+            p_IsOnView.Play();
+            c_AudioPlayed = true;
+        }
+        imageCanvasGroup.alpha = c_Timer / timeToReact;
+        c_Timer += Time.deltaTime;
+        if (c_Timer == timeToReact)
+        {
+            gameEnding.CaughtPlayer();
+        }
+        
+
     }
 }
